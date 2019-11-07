@@ -30,13 +30,13 @@ android {
 }
 
 
-/****Add or update local.properties in root project folder file with gpr.usr= *GitHub user ID*  & gpr.key = *GitHub Token****/
-def localPropertiesFile = rootProject.file("local.properties");
-def localProperties = new Properties()
-localProperties.load(new FileInputStream(localPropertiesFile))
+/**Create github.properties in root project folder file with gpr.usr=GITHUB_USER_ID  & gpr.key=PERSONAL_ACCESS_TOKEN**/def githubPropertiesFile = rootProject.file("github.properties");
+def githubProperties = new Properties()
+githubProperties.load(new FileInputStream(githubPropertiesFile))
+
 
 def getVersionName = { ->
-    return "1.0.1" // Replace with version Name
+    return "1.0.2" // Replace with version Name
 }
 
 def getArtificatId = { ->
@@ -57,14 +57,14 @@ publishing {
         maven {
             name = "GitHubPackages"
             /** Configure path of your package repository on Github
-             *  Replace OWNER with your/organisation Github userID and RESPOSITORY with the repository name
+             *  Replace GITHUB_USERID with your/organisation Github userID and REPOSITORY with the repository name on GitHub
              */
-            url = uri("https://maven.pkg.github.com/OWNER/RESPOSITORY")
+            url = uri("https://maven.pkg.github.com/GITHUB_USERID/REPOSITORY")
 
             credentials {
-                /****Add or update local.properties in root project folder file with gpr.usr= *GitHub user ID*  & gpr.key = *GitHub Token****/
-                username = localProperties['gpr.usr'] ?: System.getenv("GPR_USER")
-                password = localProperties['gpr.key'] ?: System.getenv("GPR_API_KEY")
+                /**Create github.properties in root project folder file with gpr.usr=GITHUB_USER_ID  & gpr.key=PERSONAL_ACCESS_TOKEN**/
+                username = githubProperties['gpr.usr'] ?: System.getenv("GPR_USER")
+                password = githubProperties['gpr.key'] ?: System.getenv("GPR_API_KEY")
             }
         }
     }

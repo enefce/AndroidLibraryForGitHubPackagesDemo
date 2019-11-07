@@ -5,10 +5,10 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 
-/****Add or update local.properties in root project folder file with gpr.usr= *GitHub user ID*  & gpr.key = *GitHub Token****/
-def localPropertiesFile = rootProject.file("local.properties");
-def localProperties = new Properties()
-localProperties.load(new FileInputStream(localPropertiesFile))
+/**Create github.properties in root project folder file with gpr.usr=GITHUB_USER_ID  & gpr.key=PERSONAL_ACCESS_TOKEN**/
+def githubPropertiesFile = rootProject.file("github.properties");
+def githubProperties = new Properties()
+githubProperties.load(new FileInputStream(githubPropertiesFile))
 
 android {
     compileSdkVersion 29
@@ -31,15 +31,15 @@ android {
         maven {
             name = "GitHubPackages"
             /*  Configure path to the library hosted on GitHub Packages Registry
-             *  Replace UserID with package owner userID and RESPOSITORY with the repository name
+             *  Replace UserID with package owner userID and REPOSITORY with the repository name
              *  e.g. "https://maven.pkg.github.com/enefce/AndroidLibraryForGitHubPackagesDemo"
              */
-            url = uri("https://maven.pkg.github.com/UserID/RESPOSITORY")
+            url = uri("https://maven.pkg.github.com/UserID/REPOSITORY")
 
             credentials {
-                /****Add or update local.properties in root project folder file with gpr.usr= *GitHub user ID*  & gpr.key = *GitHub Token****/
-                username = localProperties['gpr.usr'] ?: System.getenv("GPR_USER")
-                password = localProperties['gpr.key'] ?: System.getenv("GPR_API_KEY")
+                /**Create github.properties in root project folder file with gpr.usr=GITHUB_USER_ID  & gpr.key =PERSONAL_ACCESS_TOKEN**/
+                username = githubProperties['gpr.usr'] ?: System.getenv("GPR_USER")
+                password = githubProperties['gpr.key'] ?: System.getenv("GPR_API_KEY")
             }
         }
     }
