@@ -1,0 +1,80 @@
+
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+apply plugin: 'maven-publish'
+
+
+android {
+    compileSdkVersion 29
+
+
+    defaultConfig {
+        minSdkVersion 23
+        targetSdkVersion 29
+        versionCode 1
+        versionName getVersionName()
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles 'consumer-rules.pro'
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+
+// Add or update local.properties file with gpr.usr= *GitHub user ID*  & gpr.key = *GitHub Token*
+def localPropertiesFile = rootProject.file("local.properties");
+def localProperties = new Properties()
+localProperties.load(new FileInputStream(localPropertiesFile))
+
+def getVersionName = { ->
+    return "1.0.1" // Replace with version Name
+}
+
+def getArtificatId = { ->
+    return "sampleAndroidLib" // Replace with library name ID
+}
+
+publishing {
+    publications {
+        bar(MavenPublication) {
+            groupId 'com.enefce.libraries'
+            artifactId getArtificatId()
+            version getVersionName()
+            artifact("$buildDir/outputs/aar/${getArtificatId()}-release.aar")
+        }
+    }
+
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            //Replace *OWNER* with your Github userID and *RESPOSITORY* with the repository name
+            url = uri("https://maven.pkg.github.com/*OWNER*/*RESPOSITORY*")
+
+            credentials {
+                // Add or update local.properties file with gpr.usr= *GitHub User ID*  & gpr.key = *GitHub Token*
+                username = localProperties['gpr.usr'] ?: System.getenv("GPR_USER")
+                password = localProperties['gpr.key'] ?: System.getenv("GPR_API_KEY")
+            }
+        }
+    }
+}
+
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.core:core-ktx:1.1.0'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+}

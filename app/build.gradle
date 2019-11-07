@@ -1,0 +1,66 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+
+/****In case the library published on GitHub Packages Repository is Private
+ * Ignore this for public repositories***/
+// Add or update local.properties file with gpr.usr= *GitHub user ID*  & gpr.key = *GitHub Token*
+def localPropertiesFile = rootProject.file("local.properties");
+def localProperties = new Properties()
+localProperties.load(new FileInputStream(localPropertiesFile))
+/*****************************************************************************/
+
+android {
+    compileSdkVersion 29
+    defaultConfig {
+        applicationId "com.enefce.samples.androidlibdemo"
+        minSdkVersion 23
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+/****In case the library published on GitHub Packages Repository is Private
+ * Ignore this for public repositories***/
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            //Replace *OWNER* with your Github userID and *RESPOSITORY* with the repository name
+            url = uri("https://maven.pkg.github.com/*OWNER*/*RESPOSITORY*")
+
+            credentials {
+                // Add or update local.properties file with gpr.usr=*GitHub User ID*  & gpr.key=*GitHub Token*
+                username = localProperties['gpr.usr'] ?: System.getenv("GPR_USER")
+                password = localProperties['gpr.key'] ?: System.getenv("GPR_API_KEY")
+            }
+        }
+    }
+    /*****************************************************************************/
+
+}
+
+
+dependencies {
+
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    //Use SampleAndroidLib library
+    implementation 'com.enefce.libraries:sampleAndroidLib:1.0.1'
+
+    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.core:core-ktx:1.1.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+}
