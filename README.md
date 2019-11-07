@@ -1,27 +1,24 @@
-# Sample Android Library Publishing to GitHub Packages Repository
+# Sample Android Library Publishing to GitHub Package Registry
 
-  This Android project showcases the steps to publish and consume Android Libraries on the GitHub Package Repository.
+  This Android project showcases the steps to publish and consume Android Libraries on the GitHub Package Registry.
    It is made up of 2 modules 
   1.  ##### sampleAndroidLib
    - Android library module with basic functionality
-   - Publishes the generated library file onto the GitHub Packages Repository
+   - Publishes the generated library file onto the GitHub Package Registry
    - The build.gradle file inside this module has the code (plugin, tasks and authentication) related to publishing the library
   2.  #####  app
-   - Sample Android application module with the build.gradle file that shows the code for consuming the library from GitHub Packages Repository.
+   - Sample Android application module with the build.gradle file that shows the code for consuming an Android library from GitHub Package Registry.
  
-
-
 
 ------------
 
 
+**Steps to Publish an Android Library onto the GitHub Packages Registry**
 
-**Steps to Publish an Android Library onto the GitHub Packages Repository**
-
-[Step 1 : Generate a Personal Access Token for GitHub](#step-1)
+[Step 1 : Generate a Personal Access Token for GitHub](#step-1-:-generate-a-personal-access-token-for-github)
 [Step 2: Store your GitHub - Personal Access Token details](#step-2)
 [Step 3 : Update build.gradle inside the library module](#step-3)
-[Step 4 : Publish the Android Library onto GitHub Packages Repository](#step-4)
+[Step 4 : Publish the Android Library onto GitHub Package Registry](#step-4)
 
 
 **Steps to Consume an Android Library from the GitHub Packages Repository**
@@ -31,7 +28,7 @@
 [Step 3 : Update build.gradle inside the application module](#step-3)
 
 ------------
-## Publish Android library to GitHub packages repository
+## Publish Android library to GitHub Package Registry
 
 ### Step 1 : Generate a Personal Access Token for GitHub
 - Inside you GitHub account:
@@ -94,7 +91,7 @@ publishing {
     }
 }
 ```
-### Step 4 : Publish the Android Library onto GitHub Packages Repository
+### Step 4 : Publish the Android Library onto GitHub Package Registry
 > Make sure to build and run the tasks to generate the library files inside ***build/outputs/aar/*** before proceeding to publish the library.
 
 
@@ -109,7 +106,7 @@ $ gradle publish
 	
 
 ------------
-## Consuming library from GitHub packages repository
+## Consuming library from GitHub Package Registry
 > Steps 1 and 2 can be skipped if already followed while publishing a library
 
 ### Step 1 : Generate a Personal Access Token for GitHub
@@ -136,7 +133,7 @@ githubProperties.load(new FileInputStream(rootProject.file("github.properties"))
     repositories {
         maven {
             name = "GitHubPackages"
-            /*  Configure path to the library hosted on GitHub Packages Registry
+            /*  Configure path to the library hosted on GitHub Package Registry
              *  Replace UserID with package owner userID and REPOSITORY with the repository name
              *  e.g. "https://maven.pkg.github.com/enefce/AndroidLibraryForGitHubPackagesDemo"
              */
