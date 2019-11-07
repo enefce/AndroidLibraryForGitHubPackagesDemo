@@ -1,2 +1,161 @@
-# Android Library sample for Publishing to GitHub Packages Repository
-Sample Android Library project showcasing the steps to publish and consume Android Libraries on the GitHub Package Repository
+# Sample Android Library Publishing to GitHub Packages Repository
+
+  This Android project showcases the steps to publish and consume Android Libraries on the GitHub Package Repository.
+   It is made up of 2 modules 
+  1.  ##### sampleAndroidLib
+   - Android library module with basic functionality
+   - Publishes the generated library file onto the GitHub Packages Repository
+   - The build.gradle file inside this module has the code (plugin, tasks and authentication) related to publishing the library
+  2.  #####  app
+   - Sample Android application module with the build.gradle file that shows the code for consuming the library from GitHub Packages Repository.
+ 
+
+
+
+------------
+
+
+
+**Steps to Publish an Android Library onto the GitHub Packages Repository**
+
+[Step 1 : Generate a Personal Access Token for GitHub](#step-1)
+[Step 2: Store your GitHub - Personal Access Token details](#step-2)
+[Step 3 : Update build.gradle inside the library module](#step-3)
+[Step 4 : Publish the Android Library onto GitHub Packages Repository](#step-4)
+
+
+**Steps to Consume an Android Library from the GitHub Packages Repository**
+
+[Step 1 : Generate a Personal Access Token for GitHub](#step-1)
+[Step 2: Store your GitHub - Personal Access Token details](#step-2)
+[Step 3 : Update build.gradle inside the application module](#step-3)
+
+------------
+## Publish Android library to GitHub packages repository
+
+### Step 1 : Generate a Personal Access Token for GitHub
+- Inside you GitHub account:
+	- Settings -> Developer Settings -> Personal Access Tokens -> Generate new token
+	- Make sure you select the following scopes (" write:packages", " read:packages") and Generate a token
+	- After Generating make sure to copy your new personal access token. You won’t be able to see it again!
+
+### Step 2: Store your GitHub - Personal Access Token details
+- Create a **github.properties** file within your root Android project
+- In case of a public repository make sure you  add this file to .gitignore for keep the token private
+	- Add properties **gpr.usr**=*GITHUB_USERID* and **gpr.key**=*PERSONAL_ACCESS_TOKEN*
+	- Replace GITHUB_USERID with personal / organisation Github User ID and PERSONAL_ACCESS_TOKEN with the token generated in **#Step 1**
+	
+> Alternatively you can also add the **GPR_USER** and **GPR_API_KEY** values to your environment variables on you local machine or build server to avoid creating a github properties file
+
+### Step 3 : Update build.gradle inside the library module
+- Add the following code to **build.gradle** inside the library module
+```markdown
+apply plugin: 'maven-publish'
+```
+```markdown
+def githubProperties = new Properties()
+githubProperties.load(new FileInputStream(rootProject.file("github.properties")))  
+```
+```markdown
+def getVersionName = { ->
+    return "1.0.2"  // Replace with version Name
+}
+```
+```markdown
+def getArtificatId = { ->
+    return "sampleAndroidLib" // Replace with library name ID
+}
+```
+```markdown
+publishing {
+    publications {
+        bar(MavenPublication) {
+            groupId 'com.enefce.libraries' // Replace with group ID
+            artifactId getArtificatId()
+            version getVersionName()
+            artifact("$buildDir/outputs/aar/${getArtificatId()}-release.aar")
+        }
+    }
+
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            /** Configure path of your package repository on Github
+             *  Replace GITHUB_USERID with your/organisation Github userID and REPOSITORY with the repository name on GitHub
+             */
+            url = uri("https://maven.pkg.github.com/GITHUB_USERID/REPOSITORY")
+
+            credentials {
+                /**Create github.properties in root project folder file with gpr.usr=GITHUB_USER_ID  & gpr.key=PERSONAL_ACCESS_TOKEN**/
+                username = githubProperties['gpr.usr'] ?: System.getenv("GPR_USER")
+                password = githubProperties['gpr.key'] ?: System.getenv("GPR_API_KEY")
+            }
+        }
+    }
+}
+```
+### Step 4 : Publish the Android Library onto GitHub Packages Repository
+> Make sure to build and run the tasks to generate the library files inside ***build/outputs/aar/*** before proceeding to publish the library.
+
+
+- Execute the ****Publish**** gradle task which is inside your library module
+  
+```markdown
+$ gradle publish
+```
+- Once the task is successful you should be able to see the Package under the **Packages** tab of the GitHub Account
+- In case of a failure run the task with *--stacktrace*, *--info* or *--debug* to check the logs for detailed information about the causes.
+	
+	
+
+------------
+## Consuming library from GitHub packages repository
+> Steps 1 and 2 can be skipped if already followed while publishing a library
+
+### Step 1 : Generate a Personal Access Token for GitHub
+- Inside you GitHub account:
+	- Settings -> Developer Settings -> Personal Access Tokens -> Generate new token
+	- Make sure you select the following scopes (" write:packages", " read:packages") and Generate a token
+	- After Generating make sure to copy your new personal access token. You won’t be able to see it again!
+
+### Step 2: Store your GitHub - Personal Access Token details
+- Create a **github.properties** file within your root Android project
+- In case of a public repository make sure you  add this file to .gitignore for keep the token private
+	- Add properties **gpr.usr**=*GITHUB_USERID* and **gpr.key**=*PERSONAL_ACCESS_TOKEN*
+	- Replace GITHUB_USERID with personal / organisation Github User ID and PERSONAL_ACCESS_TOKEN with the token generated in **#Step 1**
+	
+> Alternatively you can also add the **GPR_USER** and **GPR_API_KEY** values to your environment variables on you local machine or build server to avoid creating a github properties file
+
+### Step 3 : Update build.gradle inside the application module 
+- Add the following code to **build.gradle** inside the application module that will be using the library published on GitHub Packages Repository
+```markdown
+def githubProperties = new Properties()
+githubProperties.load(new FileInputStream(rootProject.file("github.properties")))  
+```
+```markdown
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            /*  Configure path to the library hosted on GitHub Packages Registry
+             *  Replace UserID with package owner userID and REPOSITORY with the repository name
+             *  e.g. "https://maven.pkg.github.com/enefce/AndroidLibraryForGitHubPackagesDemo"
+             */
+            url = uri("https://maven.pkg.github.com/UserID/REPOSITORY")
+
+            credentials {
+                username = githubProperties['gpr.usr'] ?: System.getenv("GPR_USER")
+                password = githubProperties['gpr.key'] ?: System.getenv("GPR_API_KEY")
+            }
+        }
+    }
+```
+
+- inside dependencies of the build.gradle of app module, use the following code
+```markdown
+dependencies {
+    //consume library
+    implementation 'com.example:package'
+	...
+}
+```
+
