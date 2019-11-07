@@ -30,7 +30,7 @@ android {
 }
 
 
-// Add or update local.properties file with gpr.usr= *GitHub user ID*  & gpr.key = *GitHub Token*
+/****Add or update local.properties in root project folder file with gpr.usr= *GitHub user ID*  & gpr.key = *GitHub Token****/
 def localPropertiesFile = rootProject.file("local.properties");
 def localProperties = new Properties()
 localProperties.load(new FileInputStream(localPropertiesFile))
@@ -56,11 +56,13 @@ publishing {
     repositories {
         maven {
             name = "GitHubPackages"
-            //Replace *OWNER* with your Github userID and *RESPOSITORY* with the repository name
-            url = uri("https://maven.pkg.github.com/*OWNER*/*RESPOSITORY*")
+            /** Configure path of your package repository on Github
+             *  Replace OWNER with your/organisation Github userID and RESPOSITORY with the repository name
+             */
+            url = uri("https://maven.pkg.github.com/OWNER/RESPOSITORY")
 
             credentials {
-                // Add or update local.properties file with gpr.usr= *GitHub User ID*  & gpr.key = *GitHub Token*
+                /****Add or update local.properties in root project folder file with gpr.usr= *GitHub user ID*  & gpr.key = *GitHub Token****/
                 username = localProperties['gpr.usr'] ?: System.getenv("GPR_USER")
                 password = localProperties['gpr.key'] ?: System.getenv("GPR_API_KEY")
             }

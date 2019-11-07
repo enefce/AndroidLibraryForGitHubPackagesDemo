@@ -5,13 +5,10 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 
-/****In case the library published on GitHub Packages Repository is Private
- * Ignore this for public repositories***/
-// Add or update local.properties file with gpr.usr= *GitHub user ID*  & gpr.key = *GitHub Token*
+/****Add or update local.properties in root project folder file with gpr.usr= *GitHub user ID*  & gpr.key = *GitHub Token****/
 def localPropertiesFile = rootProject.file("local.properties");
 def localProperties = new Properties()
 localProperties.load(new FileInputStream(localPropertiesFile))
-/*****************************************************************************/
 
 android {
     compileSdkVersion 29
@@ -29,22 +26,23 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-/****In case the library published on GitHub Packages Repository is Private
- * Ignore this for public repositories***/
+/****GitHubPackages Path and credentials***/
     repositories {
         maven {
             name = "GitHubPackages"
-            //Replace *OWNER* with your Github userID and *RESPOSITORY* with the repository name
-            url = uri("https://maven.pkg.github.com/*OWNER*/*RESPOSITORY*")
+            /*  Configure path to the library hosted on GitHub Packages Registry
+             *  Replace UserID with package owner userID and RESPOSITORY with the repository name
+             *  e.g. "https://maven.pkg.github.com/enefce/AndroidLibraryForGitHubPackagesDemo"
+             */
+            url = uri("https://maven.pkg.github.com/UserID/RESPOSITORY")
 
             credentials {
-                // Add or update local.properties file with gpr.usr=*GitHub User ID*  & gpr.key=*GitHub Token*
+                /****Add or update local.properties in root project folder file with gpr.usr= *GitHub user ID*  & gpr.key = *GitHub Token****/
                 username = localProperties['gpr.usr'] ?: System.getenv("GPR_USER")
                 password = localProperties['gpr.key'] ?: System.getenv("GPR_API_KEY")
             }
         }
     }
-    /*****************************************************************************/
 
 }
 
