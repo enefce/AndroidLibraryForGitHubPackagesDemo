@@ -9,24 +9,6 @@
   2.  #####  app
    - Sample Android application module with the build.gradle file that shows the code for consuming an Android library from GitHub Package Registry.
  
-
-------------
-
-
-**Steps to Publish an Android Library onto the GitHub Packages Registry**
-
-[Step 1 : Generate a Personal Access Token for GitHub](#step-1-:-generate-a-personal-access-token-for-github)
-[Step 2: Store your GitHub - Personal Access Token details](#step-2)
-[Step 3 : Update build.gradle inside the library module](#step-3)
-[Step 4 : Publish the Android Library onto GitHub Package Registry](#step-4)
-
-
-**Steps to Consume an Android Library from the GitHub Packages Repository**
-
-[Step 1 : Generate a Personal Access Token for GitHub](#step-1)
-[Step 2: Store your GitHub - Personal Access Token details](#step-2)
-[Step 3 : Update build.gradle inside the application module](#step-3)
-
 ------------
 ## Publish Android library to GitHub Package Registry
 
@@ -106,7 +88,9 @@ $ gradle publish
 	
 
 ------------
-## Consuming library from GitHub Package Registry
+## Using a library from the GitHub Package Registry
+> Currently the GitHub Package Registry requires us to Authenticate to download an Android Library (Public or Private) hosted on the GitHub Package Registry. This might change for future releases
+
 > Steps 1 and 2 can be skipped if already followed while publishing a library
 
 ### Step 1 : Generate a Personal Access Token for GitHub
