@@ -1,3 +1,5 @@
+[![Actions Status](https://github.com/enefce/AndroidLibraryForGitHubPackagesDemo/workflows/Android%20CI/badge.svg)](https://github.com/enefce/AndroidLibraryForGitHubPackagesDemo/actions)
+
 # Sample Android Library Publishing to GitHub Package Registry
 
   This Android project showcases the steps to publish and consume Android Libraries on the GitHub Package Registry.
