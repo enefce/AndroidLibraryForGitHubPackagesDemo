@@ -15,3 +15,6 @@ jobs:
         java-version: 1.8
     - name: Build with Gradle
       run: ./gradlew build
+      env:
+        GPR_USR: prasad79
+        GPR_API_KEY: e4fffc97b188b97f0e87a6a87794bba9e62ce97a
