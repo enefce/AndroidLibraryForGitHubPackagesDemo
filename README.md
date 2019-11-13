@@ -1,11 +1,9 @@
+
 [![Build Status](https://github.com/enefce/AndroidLibraryForGitHubPackagesDemo/workflows/Android%20CI/badge.svg)](https://github.com/enefce/AndroidLibraryForGitHubPackagesDemo/actions)
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fenefce%2FAndroidLibraryForGitHubPackagesDemo.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fenefce%2FAndroidLibraryForGitHubPackagesDemo?ref=badge_shield)
 [![Library Version](https://img.shields.io/badge/LibraryVersion-v1.0.2-brightgreen)](https://github.com/enefce/AndroidLibraryForGitHubPackagesDemo/packages/50498)
 
-
 ![License](https://img.shields.io/github/license/enefce/AndroidLibraryForGitHubPackagesDemo?color=2fc544)
-
-
 
 
 # Sample Android Library Publishing to GitHub Package Registry
@@ -150,3 +148,7 @@ dependencies {
 }
 ```
 
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fenefce%2FAndroidLibraryForGitHubPackagesDemo.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fenefce%2FAndroidLibraryForGitHubPackagesDemo?ref=badge_large)
