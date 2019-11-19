@@ -104,7 +104,7 @@ $ gradle publish
 ### Step 1 : Generate a Personal Access Token for GitHub
 - Inside you GitHub account:
 	- Settings -> Developer Settings -> Personal Access Tokens -> Generate new token
-	- Make sure you select the following scopes (" write:packages", " read:packages") and Generate a token
+	- Make sure you select the following scopes ("read:packages") and Generate a token
 	- After Generating make sure to copy your new personal access token. You won’t be able to see it again!
 
 ### Step 2: Store your GitHub - Personal Access Token details
