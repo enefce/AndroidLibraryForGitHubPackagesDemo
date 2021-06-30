@@ -36,24 +36,24 @@
 
 ### Step 3 : Update build.gradle inside the library module
 - Add the following code to **build.gradle** inside the library module
-```markdown
+```gradle
 apply plugin: 'maven-publish'
 ```
-```markdown
+```gradle
 def githubProperties = new Properties()
 githubProperties.load(new FileInputStream(rootProject.file("github.properties")))  
 ```
-```markdown
+```gradle
 def getVersionName = { ->
     return "1.0.2"  // Replace with version Name
 }
 ```
-```markdown
+```gradle
 def getArtificatId = { ->
     return "sampleAndroidLib" // Replace with library name ID
 }
 ```
-```markdown
+```gradle
 publishing {
     publications {
         bar(MavenPublication) {
@@ -87,7 +87,7 @@ publishing {
 
 - Execute the ****Publish**** gradle task which is inside your library module
   
-```markdown
+```console
 $ gradle publish
 ```
 - Once the task is successful you should be able to see the Package under the **Packages** tab of the GitHub Account
@@ -117,11 +117,11 @@ $ gradle publish
 
 ### Step 3 : Update build.gradle inside the application module 
 - Add the following code to **build.gradle** inside the application module that will be using the library published on GitHub Packages Repository
-```markdown
+```gradle
 def githubProperties = new Properties()
 githubProperties.load(new FileInputStream(rootProject.file("github.properties")))  
 ```
-```markdown
+```gradle
     repositories {
         maven {
             name = "GitHubPackages"
@@ -140,10 +140,10 @@ githubProperties.load(new FileInputStream(rootProject.file("github.properties"))
 ```
 
 - inside dependencies of the build.gradle of app module, use the following code
-```markdown
+```gradle
 dependencies {
-    //consume library
-    implementation 'com.example:package'
+    //consume library, e.q. 'com.enefce.libraries.sampleAndroidLib:sampleandroidlib:1.0.5'
+    implementation '<groupId>:<artifactId>:<version>'
 	...
 }
 ```
